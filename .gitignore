@@ -1,21 +1,40 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+if not AutoOnLuacInGame then
+	AutoOnLuacInGame = nil
+	
+	-- AUTO ON Luac INGAME
+	-- INGAME CHECK
+	function inGame()
+		if not game_state_machine then return false end
+		return string.find(game_state_machine:current_state_name(), "game")
+	end
+	
+	-------------
+	-- GAME --
+	-------------
+if inGame() and isPlaying() then
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+	-- -- DEBUG EVENTS
+	-- managers.mission:set_persistent_debug_enabled(true) 
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+	
+	-- LMG AIMING
+	--M249 Iron Sights
+    local pivot_shoulder_translation = Vector3( 10.7806, 4.38612, 0 ) --[[Untouched U23 values]]
+    local pivot_shoulder_rotation = Rotation( 0.106596, -0.0844502, 0.629187 ) --[[Untouched U23 values]]
+    local pivot_head_rotation = Rotation( 0, 0.2, 0 )
+    tweak_data.player.stances[ "m249" ].steelsight.shoulders.translation = Vector3( 0, 5.7, .75 ) - pivot_shoulder_translation:rotate_with( pivot_shoulder_rotation:inverse() ):rotate_with( pivot_head_rotation )
+    tweak_data.player.stances[ "m249" ].steelsight.shoulders.rotation = pivot_head_rotation
+    --RPK Iron Sights
+    local pivot_shoulder_translation = Vector3( 10.6725, 27.7166, -4.93564 ) --[[Untouched U23 values]]
+    local pivot_shoulder_rotation = Rotation( 0.1067, -0.0850111, 0.629008 ) --[[Untouched U23 values]]
+    local pivot_head_rotation = Rotation( 0, 0.2, 0 )
+    tweak_data.player.stances[ "rpk" ].steelsight.shoulders.translation = Vector3( .1, 7, 0.22 ) - pivot_shoulder_translation:rotate_with( pivot_shoulder_rotation:inverse() ):rotate_with( pivot_head_rotation )
+    tweak_data.player.stances[ "rpk" ].steelsight.shoulders.rotation = pivot_head_rotation
+    --HK21 (Brenner) steel sights
+    local pivot_shoulder_translation = Vector3( 11.3874, 18.55, -2.08902 ) --[[Untouched U23 values]]
+    local pivot_shoulder_rotation = Rotation( 3.03061, 1.08595, 1.87441 ) --[[Untouched U23 values]]
+    local pivot_head_rotation = Rotation( -3, -1, -2 )
+    tweak_data.player.stances[ "hk21" ].steelsight.shoulders.translation = Vector3( .98, 10, 0.1 ) - pivot_shoulder_translation:rotate_with( pivot_shoulder_rotation:inverse() ):rotate_with( pivot_head_rotation )
+    tweak_data.player.stances[ "hk21" ].steelsight.shoulders.rotation = pivot_head_rotation
+	end
+end
